@@ -1,9 +1,9 @@
 #include "PlatformerGame/Public/Character/VoidBaseCharacter.h"
 
-AVoidBaseCharacter::AVoidBaseCharacter()
+
+AVoidBaseCharacter::AVoidBaseCharacter(const FObjectInitializer& ObjectInitializer)
 {
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 void AVoidBaseCharacter::BeginPlay()

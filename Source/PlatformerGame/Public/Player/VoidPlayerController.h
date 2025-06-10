@@ -24,34 +24,10 @@ protected:
 
 	virtual void BeginPlay() override;
 
-	virtual void SetupInputComponent() override;;
 
 private:
 
-	UPROPERTY(EditDefaultsOnly, Category = "Input")
-	TObjectPtr<UInputMappingContext> MainContext;
-	
-	UPROPERTY(EditDefaultsOnly, Category = "Input")
-	TObjectPtr<UInputAction> MoveAction;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Input")
-	TObjectPtr<UInputAction> JumpAction;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Input")
-	TObjectPtr<UInputAction> FastFallAction;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Input")
-	float FastFallGravityScale = 4;;
-
-	void Move(const FInputActionValue& ActionValue);
-
-	void StartJump();
-
-	void StopJump();
-
-	void FastFallPressed();
-
-	void FastFallReleased();
 	
 };
 

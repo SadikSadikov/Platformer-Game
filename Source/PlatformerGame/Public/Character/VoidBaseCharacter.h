@@ -13,7 +13,7 @@ class PLATFORMERGAME_API AVoidBaseCharacter : public ACharacter
 
 public:
 	
-	AVoidBaseCharacter();
+	AVoidBaseCharacter(const FObjectInitializer& ObjectInitializer);
 
 protected:
 	
