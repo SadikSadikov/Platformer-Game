@@ -34,6 +34,8 @@ void AVoidPlayer::Landed(const FHitResult& Hit)
 	Super::Landed(Hit);
 
 	bIsJumped = false;
+	bCanDoubleJump = false;
+	bCanFirstJump = true;
 }
 
 void AVoidPlayer::CheckJumpInput(float DeltaTime)
@@ -74,15 +76,24 @@ void AVoidPlayer::Move(const FInputActionValue& ActionValue)
 
 void AVoidPlayer::StartJump()
 {
-	Jump();
+	
 	if (UVoidCharacterMovementComponent* VoidMovComp = Cast<UVoidCharacterMovementComponent>(GetCharacterMovement()))
 	{
-		if (!bIsJumped)
+		if (VoidMovComp->bCanCayoteTime && !bIsJumped)
 		{
-			VoidMovComp->StartCayoteTime();
+			VoidMovComp->BeginCayoteTime();
 		}
-			
-			
+		else if (!bIsJumped && bCanFirstJump && !VoidMovComp->IsFalling())
+		{
+			bCanFirstJump = false;
+			bCanDoubleJump = true;
+			Jump();
+		}
+		else if (bCanDoubleJump)
+		{
+			Jump();
+		}
+		
 	}
 }
 
@@ -101,6 +112,6 @@ void AVoidPlayer::FastFallPressed()
 
 void AVoidPlayer::FastFallReleased()
 {
-	GetCharacterMovement()->GravityScale = DefaultGravityScale;
+	GetCharacterMovement()->GravityScale = 3.f;
 }
 

@@ -62,6 +62,10 @@ private:
 
 	bool bIsJumped = false;
 
+	bool bCanFirstJump = true;
+
+	bool bCanDoubleJump = false;
+
 
 	
 };
