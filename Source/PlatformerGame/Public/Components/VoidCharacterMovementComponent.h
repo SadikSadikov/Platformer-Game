@@ -45,10 +45,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Cayote Time")
 	float CayoteTimeRate = 0.2;
-
-	// Used only for Cayote Time not affected real JumpZVelocity
-	UPROPERTY(EditDefaultsOnly, Category = "Cayote Time")
-	float JumpZVelocityOverride = 1000.f;
+	
 
 	// Dash
 

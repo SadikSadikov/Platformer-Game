@@ -13,5 +13,10 @@ UCLASS()
 class PLATFORMERGAME_API AVoidEnemy : public AVoidBaseCharacter
 {
 	GENERATED_BODY()
+
+public:
+	
+	AVoidEnemy(const FObjectInitializer& ObjectInitializer);
+	
 	
 };

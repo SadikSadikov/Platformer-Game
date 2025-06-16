@@ -58,7 +58,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	float FastFallGravityScale = 5;
 
-	float DefaultGravityScale;
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	float CustomGravityScale = 3;
 
 	bool bIsJumped = false;
 

@@ -6,6 +6,16 @@ AVoidBaseCharacter::AVoidBaseCharacter(const FObjectInitializer& ObjectInitializ
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+UAbilitySystemComponent* AVoidBaseCharacter::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
+
+UAttributeSet* AVoidBaseCharacter::GetAttributeSet() const
+{
+	return AttributeSet;
+}
+
 void AVoidBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();

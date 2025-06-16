@@ -10,7 +10,15 @@
 AVoidPlayer::AVoidPlayer(const FObjectInitializer& ObjectInitializer)
 :Super(ObjectInitializer.SetDefaultSubobjectClass<UVoidCharacterMovementComponent>(CharacterMovementComponentName))
 {
-	DefaultGravityScale = GetCharacterMovement()->GravityScale;
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
+	GetCharacterMovement()->bConstrainToPlane = true;
+	GetCharacterMovement()->SetPlaneConstraintNormal(FVector(0.f, 1.f, 0.f));
+	GetCharacterMovement()->JumpZVelocity = 700.f;
+	GetCharacterMovement()->AirControl = 0.3f;
+	GetCharacterMovement()->MaxAcceleration = 2500.f;
+	JumpMaxHoldTime = 0.4f;
+	JumpMaxCount = 2;
 }
 
 void AVoidPlayer::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -112,6 +120,6 @@ void AVoidPlayer::FastFallPressed()
 
 void AVoidPlayer::FastFallReleased()
 {
-	GetCharacterMovement()->GravityScale = 3.f;
+	GetCharacterMovement()->GravityScale = CustomGravityScale;
 }
 
