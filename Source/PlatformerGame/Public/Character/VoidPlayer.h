@@ -24,6 +24,9 @@ public:
 	virtual void Landed(const FHitResult& Hit) override;
 
 	virtual void CheckJumpInput(float DeltaTime) override;
+	
+	virtual void PossessedBy(AController* NewController) override;
+	
 
 protected:
 	

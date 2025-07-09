@@ -6,6 +6,8 @@
 #include "Character/VoidBaseCharacter.h"
 #include "VoidEnemy.generated.h"
 
+class UBehaviorTree;
+class AVoidAIController;
 /**
  * 
  */
@@ -17,6 +19,18 @@ class PLATFORMERGAME_API AVoidEnemy : public AVoidBaseCharacter
 public:
 	
 	AVoidEnemy(const FObjectInitializer& ObjectInitializer);
+
+	virtual void PossessedBy(AController* NewController) override;
+
+protected:
+
+	virtual void BeginPlay() override;
+
+	UPROPERTY()
+	TObjectPtr<AVoidAIController> VoidAIController;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	TObjectPtr<UBehaviorTree> BehaviorTree;
 	
 	
 };

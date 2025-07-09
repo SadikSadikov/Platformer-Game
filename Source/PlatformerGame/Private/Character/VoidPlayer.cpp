@@ -3,17 +3,19 @@
 
 #include "Character/VoidPlayer.h"
 
+#include "AbilitySystemComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Components/VoidCharacterMovementComponent.h"
+#include "Player/VoidPlayerState.h"
 
 AVoidPlayer::AVoidPlayer(const FObjectInitializer& ObjectInitializer)
 :Super(ObjectInitializer.SetDefaultSubobjectClass<UVoidCharacterMovementComponent>(CharacterMovementComponentName))
 {
+	Tags.Add(FName("Player"));
+	
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
-	GetCharacterMovement()->bConstrainToPlane = true;
-	GetCharacterMovement()->SetPlaneConstraintNormal(FVector(0.f, 1.f, 0.f));
 	GetCharacterMovement()->JumpZVelocity = 700.f;
 	GetCharacterMovement()->AirControl = 0.3f;
 	GetCharacterMovement()->MaxAcceleration = 2500.f;
@@ -53,6 +55,16 @@ void AVoidPlayer::CheckJumpInput(float DeltaTime)
 	if (bPressedJump)
 	{
 		bIsJumped = true;
+	}
+}
+
+void AVoidPlayer::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (AVoidPlayerState* VoidPlayerState = GetPlayerState<AVoidPlayerState>())
+	{
+		VoidPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(VoidPlayerState, this);
 	}
 }
 
