@@ -2,7 +2,8 @@
 
 
 #include "Character/VoidEnemy.h"
-#include "AbilitySystemComponent.h"
+#include "AbilitySystem/VoidAbilitySystemComponent.h"
+#include "AbilitySystem/VoidAttributeSet.h"
 #include "AI/VoidAIController.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
@@ -19,11 +20,11 @@ AVoidEnemy::AVoidEnemy(const FObjectInitializer& ObjectInitializer) : Super(Obje
 	GetCharacterMovement()->MaxWalkSpeed = 300.f;
 	GetCharacterMovement()->MaxAcceleration = 1024.f;
 	
-	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
+	AbilitySystemComponent = CreateDefaultSubobject<UVoidAbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 	
-	AttributeSet = CreateDefaultSubobject<UAttributeSet>("AttributeSet");
+	AttributeSet = CreateDefaultSubobject<UVoidAttributeSet>("AttributeSet");
 }
 
 void AVoidEnemy::PossessedBy(AController* NewController)

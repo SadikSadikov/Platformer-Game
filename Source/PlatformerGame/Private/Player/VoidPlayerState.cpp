@@ -3,17 +3,18 @@
 
 #include "Player/VoidPlayerState.h"
 
-#include "AbilitySystemComponent.h"
+#include "AbilitySystem/VoidAbilitySystemComponent.h"
+#include "AbilitySystem/VoidAttributeSet.h"
 
 AVoidPlayerState::AVoidPlayerState()
 {
 	SetNetUpdateFrequency(100.f);
 	
-	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
+	AbilitySystemComponent = CreateDefaultSubobject<UVoidAbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 
-	AttributeSet = CreateDefaultSubobject<UAttributeSet>("AttributeSet");
+	AttributeSet = CreateDefaultSubobject<UVoidAttributeSet>("AttributeSet");
 }
 
 UAbilitySystemComponent* AVoidPlayerState::GetAbilitySystemComponent() const
