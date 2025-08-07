@@ -25,7 +25,10 @@ public:
 
 	virtual void CheckJumpInput(float DeltaTime) override;
 	
+
 	virtual void PossessedBy(AController* NewController) override;
+
+	virtual void OnRep_PlayerState() override;
 	
 
 protected:
@@ -33,6 +36,8 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+
+	void InitAbilityActorInfo();
 
 	// Input
 

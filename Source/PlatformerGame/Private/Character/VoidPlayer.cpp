@@ -58,14 +58,33 @@ void AVoidPlayer::CheckJumpInput(float DeltaTime)
 	}
 }
 
+
+
 void AVoidPlayer::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	if (AVoidPlayerState* VoidPlayerState = GetPlayerState<AVoidPlayerState>())
-	{
-		VoidPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(VoidPlayerState, this);
-	}
+	// Init Ability Actor Info for the Server
+	InitAbilityActorInfo();
+}
+
+void AVoidPlayer::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+
+	// Init Ability Actor Info for the Client
+	InitAbilityActorInfo();
+}
+
+void AVoidPlayer::InitAbilityActorInfo()
+{
+	AVoidPlayerState* VoidPlayerState = GetPlayerState<AVoidPlayerState>();
+	check(VoidPlayerState);
+	
+	VoidPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(VoidPlayerState, this);
+	AbilitySystemComponent = VoidPlayerState->GetAbilitySystemComponent();
+	AttributeSet = VoidPlayerState->GetAttributeSet();
+	
 }
 
 void AVoidPlayer::BeginPlay()

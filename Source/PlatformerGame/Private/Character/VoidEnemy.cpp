@@ -20,6 +20,9 @@ AVoidEnemy::AVoidEnemy(const FObjectInitializer& ObjectInitializer) : Super(Obje
 	GetCharacterMovement()->MaxAcceleration = 1024.f;
 	
 	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
+	AbilitySystemComponent->SetIsReplicated(true);
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+	
 	AttributeSet = CreateDefaultSubobject<UAttributeSet>("AttributeSet");
 }
 
