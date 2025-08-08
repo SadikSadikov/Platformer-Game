@@ -4,20 +4,16 @@
 #include "Actor/VoidEffectActor.h"
 
 #include "AbilitySystemComponent.h"
-#include "AbilitySystemInterface.h"
-#include "AbilitySystem/VoidAttributeSet.h"
-#include "Components/SphereComponent.h"
+#include "AbilitySystemBlueprintLibrary.h"
 
 AVoidEffectActor::AVoidEffectActor()
 {
  	
 	PrimaryActorTick.bCanEverTick = false;
-
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
-	SetRootComponent(Mesh);
 	
-	Sphere = CreateDefaultSubobject<USphereComponent>("SphereComponent");
-	Sphere->SetupAttachment(GetRootComponent());
+	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	SetRootComponent(Root);
+	
 
 }
 
@@ -25,28 +21,25 @@ AVoidEffectActor::AVoidEffectActor()
 void AVoidEffectActor::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Sphere->OnComponentBeginOverlap.AddDynamic(this, &AVoidEffectActor::OnSphereBeginOverlap);
-	Sphere->OnComponentEndOverlap.AddDynamic(this, &AVoidEffectActor::OnSphereEndOverlap);
+	
 }
 
-void AVoidEffectActor::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AVoidEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> EffectToApply)
 {
-	// TODO: Change this to apply a Gameplay Effect. For now using const_cast as a hack?
-	if (IAbilitySystemInterface* ASInterface = Cast<IAbilitySystemInterface>(OtherActor))
-	{
-		const UVoidAttributeSet* VoidAS = Cast<UVoidAttributeSet>(ASInterface->GetAbilitySystemComponent()->GetAttributeSet(UVoidAttributeSet::StaticClass()));
-		UVoidAttributeSet* MutableVoidAS = const_cast<UVoidAttributeSet*>(VoidAS);
-		MutableVoidAS->SetHealth(VoidAS->GetHealth() + 25.f);
-		Destroy();
-	}
+	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+	if (TargetASC == nullptr) return;
+
+	check(EffectToApply);
+
+
+	FGameplayEffectContextHandle EffectContextHandle = TargetASC->MakeEffectContext();
+	EffectContextHandle.AddSourceObject(this);
+	FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(EffectToApply, 1.f, EffectContextHandle);
+	TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
+	
+
 }
 
-void AVoidEffectActor::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-}
 
 
 
