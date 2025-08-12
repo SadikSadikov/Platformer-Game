@@ -76,6 +76,11 @@ void AVoidPlayer::OnRep_PlayerState()
 	InitAbilityActorInfo();
 }
 
+float AVoidPlayer::GetCameraHeightChangeThreshold() const
+{
+	return CameraHeightChangeThreshold;
+}
+
 void AVoidPlayer::InitAbilityActorInfo()
 {
 	AVoidPlayerState* VoidPlayerState = GetPlayerState<AVoidPlayerState>();

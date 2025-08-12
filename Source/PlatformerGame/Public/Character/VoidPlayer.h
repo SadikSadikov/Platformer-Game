@@ -29,6 +29,9 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 
 	virtual void OnRep_PlayerState() override;
+
+	/** gets CameraHeightChangeThreshold value */
+	float GetCameraHeightChangeThreshold() const;
 	
 
 protected:
@@ -36,6 +39,13 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+
+	/** 
+	* Camera is fixed to the ground, even when player jumps.
+	* But, if player jumps higher than this threshold, camera will start to follow.
+	*/
+	UPROPERTY(EditDefaultsOnly, Category = "Camera Config")
+	float CameraHeightChangeThreshold;
 
 	void InitAbilityActorInfo();
 
