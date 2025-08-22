@@ -1,5 +1,6 @@
 #include "PlatformerGame/Public/Character/VoidBaseCharacter.h"
 
+#include "AbilitySystem/VoidAbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 
@@ -28,6 +29,19 @@ UAttributeSet* AVoidBaseCharacter::GetAttributeSet() const
 void AVoidBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
+}
+
+void AVoidBaseCharacter::InitAbilityActorInfo()
+{
+}
+
+void AVoidBaseCharacter::AddCharacterAbilities()
+{
+	if (!HasAuthority()) return;
+
+	UVoidAbilitySystemComponent* VoidASC = CastChecked<UVoidAbilitySystemComponent>(AbilitySystemComponent);
+	VoidASC->AddCharacterAbilities(StartupAbilities);
 	
 }
 

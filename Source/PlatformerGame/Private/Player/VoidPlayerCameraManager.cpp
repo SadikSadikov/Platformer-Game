@@ -18,7 +18,7 @@ AVoidPlayerCameraManager::AVoidPlayerCameraManager()
 	CameraFixedRotation = FRotator(0.0f, -90.0f, 0.0f);
 	FixedCameraOffsetZ = 130.0f;
 
-	CameraOffsetX = 240.f;
+	CameraOffsetX = 50.f;
 	DesiredCameraOffsetX = 0.f;
 	CurrentCameraOffsetX = 0.f;
 	CameraOffsetInterpSpeedX = 2.f;
@@ -29,7 +29,7 @@ void AVoidPlayerCameraManager::UpdateViewTargetInternal(FTViewTarget& OutVT, flo
 	FVector ViewLoc;
 	FRotator ViewRot;
 	OutVT.Target->GetActorEyesViewPoint(ViewLoc, ViewRot);
-	ViewLoc.X += CalcCameraOffsetX(DeltaTime); // Camera offset X
+	ViewLoc.X = CalcCameraOffsetX(DeltaTime);
 	ViewLoc.Z = CalcCameraOffsetZ(DeltaTime);
 	ViewLoc.Z += FixedCameraOffsetZ;
 
@@ -91,9 +91,11 @@ float AVoidPlayerCameraManager::CalcCameraOffsetX(float DeltaTime)
 	AVoidPlayer* MyPawn = PCOwner ? Cast<AVoidPlayer>(PCOwner->GetPawn()) : nullptr;
 	if (MyPawn)
 	{
-		float ForwardX = MyPawn->GetActorForwardVector().X;
 		
-		DesiredCameraOffsetX = CameraOffsetX * ForwardX;
+		const float ForwardX = MyPawn->GetActorForwardVector().X;
+		const float LocX = MyPawn->GetActorLocation().X + CameraOffsetX * ForwardX;
+		
+		DesiredCameraOffsetX = LocX + ForwardX * CameraOffsetX;
 		
 	}
 	

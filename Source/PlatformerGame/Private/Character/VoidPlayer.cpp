@@ -6,6 +6,7 @@
 #include "AbilitySystemComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "AbilitySystem/VoidAbilitySystemComponent.h"
 #include "Components/VoidCharacterMovementComponent.h"
 #include "Player/VoidPlayerState.h"
 
@@ -66,6 +67,7 @@ void AVoidPlayer::PossessedBy(AController* NewController)
 
 	// Init Ability Actor Info for the Server
 	InitAbilityActorInfo();
+	AddCharacterAbilities();
 }
 
 void AVoidPlayer::OnRep_PlayerState()
@@ -74,6 +76,7 @@ void AVoidPlayer::OnRep_PlayerState()
 
 	// Init Ability Actor Info for the Client
 	InitAbilityActorInfo();
+	
 }
 
 float AVoidPlayer::GetCameraHeightChangeThreshold() const
@@ -87,6 +90,7 @@ void AVoidPlayer::InitAbilityActorInfo()
 	check(VoidPlayerState);
 	
 	VoidPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(VoidPlayerState, this);
+	Cast<UVoidAbilitySystemComponent>(VoidPlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
 	AbilitySystemComponent = VoidPlayerState->GetAbilitySystemComponent();
 	AttributeSet = VoidPlayerState->GetAttributeSet();
 	

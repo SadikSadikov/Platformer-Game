@@ -40,6 +40,8 @@ public:
 	AVoidEffectActor();
 
 protected:
+
+	
 	
 	virtual void BeginPlay() override;
 
@@ -51,6 +53,9 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void OnEndOverlap(AActor* TargetActor);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly,  Category = "Effects")
+	float ActorLevel = 1.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly,  Category = "Effects")
 	bool bDestroyOnEffectRemoval = false;

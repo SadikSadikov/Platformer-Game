@@ -41,5 +41,13 @@ void AVoidEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
+	InitAbilityActorInfo();
+}
+
+void AVoidEnemy::InitAbilityActorInfo()
+{
+	Super::InitAbilityActorInfo();
+
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	Cast<UVoidAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 }

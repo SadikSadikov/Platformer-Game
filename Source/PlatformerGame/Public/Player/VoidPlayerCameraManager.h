@@ -31,6 +31,7 @@ public:
 	float GetCameraZoom() const;
 
 protected:
+	
 	// APlayerCameraManager interface
 
 	/** handle camera updates */
@@ -86,7 +87,14 @@ private:
 	float CurrentCameraOffsetZ;
 
 	/** Z axis offset camera is supposed to achieve */
-	float DesiredCameraOffsetZ;	
+	float DesiredCameraOffsetZ;
+
+
+
+
+	float CurrentPlayerLocWithThreshold = 0;
+	float DesiredPlayerLocWithThreshold = 0;
+	float DeadZone = 200;
 	
 };
 

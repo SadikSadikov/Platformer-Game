@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "VoidBaseCharacter.generated.h"
 
+class UGameplayAbility;
 class UAttributeSet;
 class UAbilitySystemComponent;
 
@@ -27,11 +28,18 @@ protected:
 	
 	virtual void BeginPlay() override;
 
+	virtual void InitAbilityActorInfo();
+
+	virtual void AddCharacterAbilities();
+
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Ability")
+	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
 
 public:
 	

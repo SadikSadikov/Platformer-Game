@@ -38,6 +38,8 @@ protected:
 	
 	virtual void BeginPlay() override;
 
+	virtual void InitAbilityActorInfo() override;
+
 private:
 
 	/** 
@@ -47,7 +49,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Config")
 	float CameraHeightChangeThreshold;
 
-	void InitAbilityActorInfo();
+
 
 	// Input
 
